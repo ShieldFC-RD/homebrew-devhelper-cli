@@ -1,8 +1,8 @@
 class DevhelperCli < Formula
   desc "A comprehensive command-line interface for ShieldDev operations"
   homepage "https://github.com/lirtsman/devhelper-cli"
-  url "https://github.com/lirtsman/devhelper-cli/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "971d6150e4b239d8261c3a6b99f14ca7789fd9c890ebbebd289ef2808a9ad9a1"
+  url "https://github.com/lirtsman/devhelper-cli/archive/refs/tags/v0.1.7.tar.gz"
+  sha256 "cbf371fa85389f5fe94e4cd8d333f10c8e5f13e55c36e3277de7fdaf18a1ac54"
   
   depends_on "go" => :build
 
@@ -14,4 +14,4 @@ class DevhelperCli < Formula
   test do
     system "#{bin}/devhelper-cli", "--help"
   end
-end 
+end
