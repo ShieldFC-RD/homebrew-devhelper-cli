@@ -1,8 +1,8 @@
 class DevhelperCli < Formula
   desc "A comprehensive command-line interface for Shield operations"
   homepage "https://github.com/lirtsman/devhelper-cli"
-  url "https://github.com/lirtsman/devhelper-cli/archive/refs/tags/v0.2.3.tar.gz"
-  sha256 "d2e51d7f8fca6b4475d442b2851f52545f08917c20f6329b2772eb0e8e4d0653"
+  url "https://github.com/lirtsman/devhelper-cli/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "d59b215e9fbc157706cf7f9ee56168137e4c5265fb00cb6828d7672c291ef8ca"
   
   depends_on "go" => :build
 
@@ -10,7 +10,7 @@ class DevhelperCli < Formula
     # Get version information and truncate tag prefix "v"
     version_no_v = version.to_s.sub(/^v/, "")
     system "go", "build", 
-           "-ldflags", "-X github.com/lirtsman/devhelper-cli/cmd.Version=#{version_no_v} -X github.com/lirtsman/devhelper-cli/cmd.BuildDate=#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")} -X github.com/lirtsman/devhelper-cli/cmd.Commit=cb36cfde8b806a1efc8be897368615b09d2182fd",
+           "-ldflags", "-X github.com/lirtsman/devhelper-cli/cmd.Version=#{version_no_v} -X github.com/lirtsman/devhelper-cli/cmd.BuildDate=#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")} -X github.com/lirtsman/devhelper-cli/cmd.Commit=6feea91f7408edf6c8d5d1f1f604e7d84cd615a5",
            "-o", "devhelper-cli"
     bin.install "devhelper-cli"
   end
