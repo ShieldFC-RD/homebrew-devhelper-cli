@@ -1,8 +1,8 @@
 class DevhelperCli < Formula
   desc "A comprehensive command-line interface for Shield operations"
   homepage "https://github.com/ShieldFC-RD/devhelper-cli"
-  url "https://github.com/ShieldFC-RD/devhelper-cli/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "d59b215e9fbc157706cf7f9ee56168137e4c5265fb00cb6828d7672c291ef8ca"
+  url "https://github.com/ShieldFC-RD/devhelper-cli/archive/refs/tags/v0.3.1.tar.gz"
+  sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
   
   depends_on "go" => :build
 
@@ -10,7 +10,7 @@ class DevhelperCli < Formula
     # Get version information and truncate tag prefix "v"
     version_no_v = version.to_s.sub(/^v/, "")
     system "go", "build", 
-           "-ldflags", "-X github.com/ShieldFC-RD/devhelper-cli/cmd.Version=#{version_no_v} -X github.com/ShieldFC-RD/devhelper-cli/cmd.BuildDate=#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")} -X github.com/ShieldFC-RD/devhelper-cli/cmd.Commit=6feea91f7408edf6c8d5d1f1f604e7d84cd615a5",
+           "-ldflags", "-X github.com/ShieldFC-RD/devhelper-cli/cmd.Version=#{version_no_v} -X github.com/ShieldFC-RD/devhelper-cli/cmd.BuildDate=#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")} -X github.com/ShieldFC-RD/devhelper-cli/cmd.Commit=8fbf80fdc0b16b4f7080c29f402ee2bf069e88ef",
            "-o", "devhelper-cli"
     bin.install "devhelper-cli"
   end
