@@ -4,8 +4,6 @@ class DevhelperCli < Formula
   version "0.4.0"
   url "https://github.com/ShieldFC-RD/devhelper-cli.git", tag: "v0.4.0"
 
-  depends_on "gh"
-
   def binary_name
     if OS.mac?
       Hardware::CPU.arm? ? "devhelper-cli-darwin-arm64" : "devhelper-cli-darwin-amd64"
@@ -25,26 +23,43 @@ class DevhelperCli < Formula
   end
 
   def install
-    # Check if GH_TOKEN is set
-    if ENV["GH_TOKEN"].nil?
-      # Try to get the token from gh CLI
-      gh_token = Utils.popen_read("gh", "auth", "token").strip
-      if gh_token.empty?
-        odie <<~EOS
-          GitHub authentication is required to install this formula.
-          Please either:
-          1. Run 'gh auth login' and try again, or
-          2. Set the GH_TOKEN environment variable with a GitHub API token:
-             export GH_TOKEN=your_token_here
-        EOS
-      end
-      ENV["GH_TOKEN"] = gh_token
+    # Get the GitHub token from environment
+    token = ENV["HOMEBREW_GITHUB_API_TOKEN"]
+    if token.nil?
+      odie <<~EOS
+        GitHub authentication is required to install this formula.
+        Please set the HOMEBREW_GITHUB_API_TOKEN environment variable with a GitHub API token:
+        export HOMEBREW_GITHUB_API_TOKEN=your_token_here
+        
+        You can create a token at: https://github.com/settings/tokens
+        The token needs the 'repo' scope to access private repositories.
+      EOS
     end
 
-    # Download the binary using gh CLI since the repository is private
-    system "gh", "release", "download", "v#{version}", 
-           "--repo", "ShieldFC-RD/devhelper-cli",
-           "--pattern", binary_name
+    # Download the binary using curl with GitHub token
+    binary_url = "https://api.github.com/repos/ShieldFC-RD/devhelper-cli/releases/tags/v#{version}"
+    assets = Utils.popen_read("curl", "-H", "Accept: application/vnd.github.v3+json",
+                                    "-H", "Authorization: token #{token}",
+                                    binary_url).strip
+
+    if $?.exitstatus != 0
+      odie "Failed to get release information. Please check your GitHub token."
+    end
+
+    require "json"
+    assets_json = JSON.parse(assets)
+    asset = assets_json["assets"].find { |a| a["name"] == binary_name }
+    
+    if asset.nil?
+      odie "Could not find binary #{binary_name} in release assets"
+    end
+
+    curl_download asset["url"],
+                 to: binary_name,
+                 headers: {
+                   "Accept" => "application/octet-stream",
+                   "Authorization" => "token #{token}"
+                 }
     
     # Verify the SHA256
     downloaded_sha256 = Utils.popen_read("shasum", "-a", "256", binary_name).split.first
