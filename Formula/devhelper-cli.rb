@@ -25,6 +25,22 @@ class DevhelperCli < Formula
   end
 
   def install
+    # Check if GH_TOKEN is set
+    if ENV["GH_TOKEN"].nil?
+      # Try to get the token from gh CLI
+      gh_token = Utils.popen_read("gh", "auth", "token").strip
+      if gh_token.empty?
+        odie <<~EOS
+          GitHub authentication is required to install this formula.
+          Please either:
+          1. Run 'gh auth login' and try again, or
+          2. Set the GH_TOKEN environment variable with a GitHub API token:
+             export GH_TOKEN=your_token_here
+        EOS
+      end
+      ENV["GH_TOKEN"] = gh_token
+    end
+
     # Download the binary using gh CLI since the repository is private
     system "gh", "release", "download", "v#{version}", 
            "--repo", "ShieldFC-RD/devhelper-cli",
