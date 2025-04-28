@@ -5,12 +5,6 @@ class DevhelperCli < Formula
 
   depends_on "gh"
 
-  # You need to create a GitHub personal access token and add it to your environment:
-  # export HOMEBREW_GITHUB_API_TOKEN=your_token_here
-  if ENV["HOMEBREW_GITHUB_API_TOKEN"].nil?
-    odie "You must set HOMEBREW_GITHUB_API_TOKEN environment variable to install this formula.\nCreate a token at https://github.com/settings/tokens"
-  end
-
   if OS.mac?
     if Hardware::CPU.arm?
       sha256 "76706018bd6a65e1bff43d06966573be1b48cf83bbd2f979b711046b960e9a4a"
