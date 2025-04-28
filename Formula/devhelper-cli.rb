@@ -6,18 +6,18 @@ class DevhelperCli < Formula
   if OS.mac?
     if Hardware::CPU.arm?
       url "https://github.com/ShieldFC-RD/devhelper-cli/releases/download/v#{version}/devhelper-cli-darwin-arm64"
-      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+      sha256 "76706018bd6a65e1bff43d06966573be1b48cf83bbd2f979b711046b960e9a4a"
     else
       url "https://github.com/ShieldFC-RD/devhelper-cli/releases/download/v#{version}/devhelper-cli-darwin-amd64"
-      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+      sha256 "5fd1cb2fbd1cf2315d0cb09ab2f5176fb090762cc705987b1627ee8177d5cfc1"
     end
   elsif OS.linux?
     if Hardware::CPU.arm?
       url "https://github.com/ShieldFC-RD/devhelper-cli/releases/download/v#{version}/devhelper-cli-linux-arm64"
-      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+      sha256 "bded17592001da17b0ad424f78ef0478c9f394b617bc25afe8ac61301d563bb9"
     else
       url "https://github.com/ShieldFC-RD/devhelper-cli/releases/download/v#{version}/devhelper-cli-linux-amd64"
-      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+      sha256 "f835e01be52474f16186c156563345b383d816e890ead1ed43ea30e51f622329"
     end
   end
 
