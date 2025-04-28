@@ -7,11 +7,7 @@ class DevhelperCli < Formula
   depends_on "go" => :build
 
   def install
-    # Get version information and truncate tag prefix "v"
-    version_no_v = version.to_s.sub(/^v/, "")
-    system "go", "build", 
-           "-ldflags", "-X github.com/ShieldFC-RD/devhelper-cli/cmd.Version=#{version_no_v} -X github.com/ShieldFC-RD/devhelper-cli/cmd.BuildDate=#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")} -X github.com/ShieldFC-RD/devhelper-cli/cmd.Commit=6434b872e3ea881388f644ddad115a8b8a5d2936",
-           "-o", "devhelper-cli"
+    system "go", "build", "-o", "devhelper-cli"
     bin.install "devhelper-cli"
   end
 
