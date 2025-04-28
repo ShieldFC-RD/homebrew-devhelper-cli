@@ -22,6 +22,8 @@ class DevhelperCli < Formula
   end
 
   def install
+    # The downloaded file is already a binary, just rename and make it executable
+    chmod 0755, Dir["*"].first
     bin.install Dir["*"].first => "devhelper-cli"
   end
 
